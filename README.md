@@ -1,2 +1,2 @@
 # Manga-Downloader
-This program downloads choosen manga from choosen webside (the pics) [and then take those pics and convert them into pdf - which is not done yet]!
+This program downloads [choosen manga - so far MGX] from [choosen webside - so far http://www.mangahere.co/] (the pics) [and then take those pics and convert them into pdf - which is not done yet]!
