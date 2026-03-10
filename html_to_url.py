@@ -31,11 +31,14 @@ def manga_sort_generator(i_start):
 		return int(chapter)*10
 	return manga_sort
 
-def chapter_to_urls_generator(url_chapter_common):
+def chapter_to_urls_generator(url_chapter_common, ignore_chapters=[]):
 	def chapters_html_to_chapter_urls(all_chapters_html):
 		# set to remove duplicities
 		chapter_urls = set(p.split("/")[0] for p in all_chapters_html.split(url_chapter_common)[1:])
 		chapter_urls = [urljoin(url_chapter_common, ch) for ch in chapter_urls]
+		if ignore_chapters:
+			i_start = equal_until(chapter_urls)
+			chapter_urls = [u for u in chapter_urls if u[i_start:] not in ignore_chapters]
 		# sort
 		return sorted(chapter_urls, key=manga_sort_generator(equal_until(chapter_urls)))
 	return chapters_html_to_chapter_urls

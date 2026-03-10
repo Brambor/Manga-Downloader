@@ -7,9 +7,10 @@ url = "https://www.mgeko.cc/manga/yamada-kun-to-lv999-no-koi-wo-suru/all-chapter
 url_chapter_common = "https://www.mgeko.cc/reader/en/"
 url_pic_starts_with = "/reader/en/"
 folder = "Yamada to lvl 999"
+ignore_chapters = ("0-eng-li",)  # 0-eng-li = 28-eng-li
 
 # custom: addded url_pic_starts_with
-def custom_chapter_to_urls_generator(url_chapter_common, url_pic_starts_with):
+def custom_chapter_to_urls_generator(url_chapter_common, url_pic_starts_with, ignore_chapters=[]):
 	def sort_generator(i_start):
 		def custom_sort(url):
 			return int(url[i_start:].split("-")[0])
@@ -19,6 +20,9 @@ def custom_chapter_to_urls_generator(url_chapter_common, url_pic_starts_with):
 		# set to remove duplicities
 		chapter_urls = set(p.split("/")[0] for p in all_chapters_html.split(url_pic_starts_with)[1:])
 		chapter_urls = [urljoin(url_chapter_common, ch) for ch in chapter_urls]
+		if ignore_chapters:
+			i_start = html_to_url.equal_until(chapter_urls)
+			chapter_urls = [u for u in chapter_urls if u[i_start:] not in ignore_chapters]
 		# sort
 		return sorted(chapter_urls, key=sort_generator(html_to_url.equal_until(chapter_urls)))
 	return chapters_html_to_chapter_urls
@@ -35,7 +39,7 @@ def img_srcs_from_page(webpage_read):
 download_abstract.program(
 	url,
 	folder,
-	custom_chapter_to_urls_generator(url_chapter_common, url_pic_starts_with),
+	custom_chapter_to_urls_generator(url_chapter_common, url_pic_starts_with, ignore_chapters),
 	custom_url_to_chapter_name,
 	img_srcs_from_page
 )
