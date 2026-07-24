@@ -16,6 +16,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 lock = threading.Lock()
 
 def myrequest(url):
+	url = url.replace(" ", "%20")
 	req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
 	tries_left = 10
 	while tries_left > 0:
@@ -78,7 +79,7 @@ def worker_download_pics(q_pic_url, q_finished):
 		pic_url, file_path, i_chapter, goal = q_pic_url.get()
 		error_file_path = file_path + ".error"
 
-		pic = myrequest(pic_url)
+		pic = None if not pic_url else myrequest(pic_url)
 		if pic == None:
 			if not os.path.exists(error_file_path):
 				os.link("resources/FAILED_pannel.png", error_file_path)
