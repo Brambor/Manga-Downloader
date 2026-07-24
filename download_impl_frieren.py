@@ -2,7 +2,7 @@ import download_abstract
 import html_to_url
 
 url = "https://www.frieren.online/"
-url_chapter_common = "https://ww2.frieren.online/manga/"
+url_chapter_common = "https://ww4.frieren.online/manga/"
 folder = "frieren"
 ignore_chapters = {
 	"2-1",  # 002 = 002-1 + 002-2

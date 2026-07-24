@@ -1,18 +1,13 @@
 import download_abstract
 import html_to_url
 
-url = "https://dandadanmanga.org/"
-url_chapter_common = f"{url}manga/"
+url = "https://dandadanmanga.net/"
+url_chapter_common = "https://ww3.dandadanmanga.net/manga/"
 folder = "DanDaDan"
 
 def img_srcs_from_page(webpage_read):
-	# some chapters (from 188) use different html in <img>
-	break1 = 'aligncenter" src="'
-	break2 = 'async" src="'
-	before_src = break1 if break1 in webpage_read else break2
-
-	parts = webpage_read.split(before_src)[1:]
-	pic_urls = tuple(p.split('"')[0] for p in parts)
+	parts = webpage_read.split('" class="wp-manga-chapter-img')[:-1]
+	pic_urls = tuple(p.split('src="')[-1].strip() for p in parts)
 	return pic_urls
 
 download_abstract.program(

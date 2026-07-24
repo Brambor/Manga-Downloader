@@ -2,7 +2,7 @@ import download_abstract
 import html_to_url
 
 url = "https://chainsawmann.com/"
-url_chapter_common = f"{url}manga/"
+url_chapter_common = "https://w3.chainsawmann.com/manga/"
 folder = "Chainsaw Man"
 
 def img_srcs_from_page(webpage_read):
